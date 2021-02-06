@@ -1,5 +1,6 @@
 package uz.doniyorbek7376.recipeapp.domain;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.*;
@@ -17,9 +18,9 @@ public class Recipe {
     private Integer servings;
     private String source;
     private String url;
+
+    @Lob
     private String directions;
-    // TODO: Add
-    // private Difficulty difficulty
     @Lob
     private Byte[] image;
 
@@ -27,14 +28,14 @@ public class Recipe {
     private Notes notes;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "recipe")
-    private Set<Ingredient> ingredients;
+    private Set<Ingredient> ingredients = new HashSet<Ingredient>();
 
     @Enumerated(value = EnumType.STRING)
     private Difficulty difficulty;
 
     @ManyToMany
     @JoinTable(name = "recipe_category", joinColumns = @JoinColumn(name = "recipe_id"), inverseJoinColumns = @JoinColumn(name = "category_id"))
-    private Set<Category> categories;
+    private Set<Category> categories = new HashSet<Category>();
 
     public String getDescription() {
         return description;
@@ -138,5 +139,10 @@ public class Recipe {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public void addIngredient(Ingredient ingredient) {
+        this.ingredients.add(ingredient);
+        ingredient.setRecipe(this);
     }
 }
