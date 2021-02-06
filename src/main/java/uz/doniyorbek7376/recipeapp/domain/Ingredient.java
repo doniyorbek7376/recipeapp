@@ -11,12 +11,22 @@ public class Ingredient {
     private Long id;
     private String description;
     private BigDecimal amount;
+    @OneToOne
+    private UnitOfMeasure uom;
 
     @ManyToOne
     private Recipe recipe;
 
     public Long getId() {
         return id;
+    }
+
+    public UnitOfMeasure getUom() {
+        return uom;
+    }
+
+    public void setUom(UnitOfMeasure uom) {
+        this.uom = uom;
     }
 
     public Recipe getRecipe() {
