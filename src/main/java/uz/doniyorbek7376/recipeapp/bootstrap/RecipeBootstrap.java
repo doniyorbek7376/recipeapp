@@ -4,6 +4,7 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 
+import lombok.extern.slf4j.Slf4j;
 import uz.doniyorbek7376.recipeapp.repositories.CategoryRepository;
 import uz.doniyorbek7376.recipeapp.repositories.RecipeRepository;
 import uz.doniyorbek7376.recipeapp.repositories.UnitOfMeasureRepository;
@@ -14,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+@Slf4j
 @Component
 public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEvent> {
 
@@ -34,7 +36,7 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
     }
 
     private List<Recipe> getRecipes() {
-
+        log.debug("Fetching recipes");
         List<Recipe> recipes = new ArrayList<>(2);
 
         // get UOMs
@@ -209,6 +211,7 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
         tacosRecipe.setSource("Simply Recipes");
 
         recipes.add(tacosRecipe);
+        log.debug("Success");
         return recipes;
     }
 }
