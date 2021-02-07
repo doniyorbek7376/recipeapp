@@ -7,23 +7,24 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import lombok.extern.slf4j.Slf4j;
-import uz.doniyorbek7376.recipeapp.repositories.RecipeRepository;
+import uz.doniyorbek7376.recipeapp.services.RecipeService;
 
 @Slf4j
 @Controller
 @RequestMapping("/recipe")
 public class RecipeController {
 
-    private RecipeRepository recipeRepository;
+    private RecipeService recipeService;
 
-    public RecipeController(RecipeRepository recipeRepository) {
-        this.recipeRepository = recipeRepository;
+    public RecipeController(RecipeService recipeService) {
+        this.recipeService = recipeService;
     }
 
     @GetMapping("/show/{id}")
     public String getRecipeById(@PathVariable("id") Long id, Model model) {
         log.debug("Getting recipe with id: " + id);
-        model.addAttribute("recipe", recipeRepository.findById(id).get());
+        model.addAttribute("recipe", recipeService.findById(id));
         return "recipe/show";
     }
+
 }

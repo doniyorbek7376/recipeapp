@@ -7,4 +7,6 @@ import uz.doniyorbek7376.recipeapp.domain.Recipe;
 public interface RecipeService {
     Set<Recipe> getRecipes();
 
+    Recipe findById(Long id);
+
 }

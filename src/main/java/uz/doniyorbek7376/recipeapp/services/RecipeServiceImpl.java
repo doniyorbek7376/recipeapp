@@ -1,6 +1,7 @@
 package uz.doniyorbek7376.recipeapp.services;
 
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 import org.springframework.stereotype.Service;
@@ -24,6 +25,15 @@ public class RecipeServiceImpl implements RecipeService {
         recipeRepository.findAll().iterator().forEachRemaining(recipes::add);
         log.debug("I'm in the service");
         return recipes;
+    }
+
+    @Override
+    public Recipe findById(Long id) {
+        Optional<Recipe> rOptional = recipeRepository.findById(id);
+        if (!rOptional.isPresent()) {
+            throw new RuntimeException("Recipe Not Found!");
+        }
+        return rOptional.get();
     }
 
 }

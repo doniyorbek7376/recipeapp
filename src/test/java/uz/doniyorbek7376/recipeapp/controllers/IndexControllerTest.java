@@ -1,7 +1,6 @@
 package uz.doniyorbek7376.recipeapp.controllers;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.ArgumentMatchers.anySet;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -11,6 +10,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
+import org.mockito.Captor;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.test.web.servlet.MockMvc;
@@ -45,6 +45,9 @@ public class IndexControllerTest {
 
     }
 
+    @Captor
+    ArgumentCaptor<Set<Recipe>> argumentCaptor;
+
     @Test
     public void getIndexPage() throws Exception {
 
@@ -56,8 +59,6 @@ public class IndexControllerTest {
         recipes.add(recipe);
 
         when(recipeService.getRecipes()).thenReturn(recipes);
-
-        ArgumentCaptor<Set<Recipe>> argumentCaptor = ArgumentCaptor.forClass(Set.class);
 
         assertEquals("index", indexController.getIndexPage(model));
         verify(recipeService, times(1)).getRecipes();
