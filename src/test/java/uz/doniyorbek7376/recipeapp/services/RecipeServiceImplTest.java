@@ -71,4 +71,11 @@ public class RecipeServiceImplTest {
         verify(recipeRepository, never()).findById(anyLong());
     }
 
+    @Test
+    public void findCommandByIdTest() throws Exception {
+        Recipe recipe = new Recipe();
+        recipe.setId(1L);
+        when(recipeRepository.findById(anyLong())).thenReturn(Optional.of(recipe));
+        assertEquals(recipe.getId(), recipeService.findCommandById(1L).getId());
+    }
 }
