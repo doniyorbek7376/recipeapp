@@ -16,6 +16,7 @@ import uz.doniyorbek7376.recipeapp.commands.IngredientCommand;
 import uz.doniyorbek7376.recipeapp.commands.RecipeCommand;
 import uz.doniyorbek7376.recipeapp.services.IngredientService;
 import uz.doniyorbek7376.recipeapp.services.RecipeService;
+import uz.doniyorbek7376.recipeapp.services.UnitOfMeasureService;
 
 public class IngredientControllerTest {
 
@@ -25,6 +26,9 @@ public class IngredientControllerTest {
     @Mock
     IngredientService ingredientService;
 
+    @Mock
+    UnitOfMeasureService uomService;
+
     IngredientController controller;
 
     MockMvc mockMvc;
@@ -32,7 +36,7 @@ public class IngredientControllerTest {
     @BeforeEach
     public void setUp() {
         MockitoAnnotations.openMocks(this);
-        controller = new IngredientController(recipeService, ingredientService);
+        controller = new IngredientController(recipeService, ingredientService, uomService);
         mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
     }
 
@@ -62,5 +66,19 @@ public class IngredientControllerTest {
         mockMvc.perform(get("/recipe/1/ingredient/1/show")).andExpect(status().isOk())
                 .andExpect(view().name("recipe/ingredient/show")).andExpect(model().attributeExists("ingredient"));
         verify(ingredientService, times(1)).findByRecipeIdAndId(anyLong(), anyLong());
+    }
+
+    @Test
+    public void getUpdateIngredientFormTest() throws Exception {
+        // given
+        IngredientCommand command = new IngredientCommand();
+        // when
+        when(ingredientService.findByRecipeIdAndId(anyLong(), anyLong())).thenReturn(command);
+        mockMvc.perform(get("/recipe/1/ingredient/1/update")).andExpect(status().isOk())
+                .andExpect(view().name("recipe/ingredient/ingredientform"))
+                .andExpect(model().attributeExists("uomList")).andExpect(model().attributeExists("ingredient"));
+
+        verify(ingredientService, times(1)).findByRecipeIdAndId(anyLong(), anyLong());
+        verify(uomService, times(1)).listAllUoms();
     }
 }
