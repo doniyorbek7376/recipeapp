@@ -5,9 +5,11 @@ import javax.persistence.*;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 @Data
 @EqualsAndHashCode(exclude = { "recipe" })
+@ToString(exclude = { "recipe" })
 @Entity
 public class Ingredient {
 

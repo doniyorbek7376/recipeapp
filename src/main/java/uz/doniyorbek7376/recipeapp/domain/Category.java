@@ -7,9 +7,11 @@ import javax.persistence.*;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 @Data
 @EqualsAndHashCode(exclude = { "recipes" })
+@ToString(exclude = { "recipes" })
 @Entity
 public class Category {
 

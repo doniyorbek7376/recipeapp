@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import lombok.extern.slf4j.Slf4j;
 import uz.doniyorbek7376.recipeapp.commands.IngredientCommand;
 import uz.doniyorbek7376.recipeapp.converters.IngredientCommandToIngredient;
 import uz.doniyorbek7376.recipeapp.converters.IngredientToIngredientCommand;
@@ -21,6 +22,7 @@ import uz.doniyorbek7376.recipeapp.domain.Recipe;
 import uz.doniyorbek7376.recipeapp.repositories.RecipeRepository;
 import uz.doniyorbek7376.recipeapp.repositories.UnitOfMeasureRepository;
 
+@Slf4j
 public class IngredientServiceImplTest {
 
     private final IngredientToIngredientCommand ingredientToIngredientCommand;
@@ -76,6 +78,29 @@ public class IngredientServiceImplTest {
     }
 
     @Test
+    public void testDeleteIngredient() throws Exception {
+        // given
+        Recipe recipe = new Recipe();
+        recipe.setId(1L);
+        Ingredient ingredient1 = new Ingredient();
+        ingredient1.setId(1L);
+        log.debug("Ingredient: " + ingredient1);
+        Ingredient ingredient2 = new Ingredient();
+        ingredient2.setId(2L);
+        Ingredient ingredient3 = new Ingredient();
+        ingredient3.setId(3L);
+        recipe.addIngredient(ingredient1);
+        recipe.addIngredient(ingredient2);
+        recipe.addIngredient(ingredient3);
+        // when
+        when(recipeRepository.findById(anyLong())).thenReturn(Optional.of(recipe));
+        ingredientService.deleteIngredientByRecipeIdAndId(1L, 1L);
+        assertEquals(2, recipe.getIngredients().size());
+        verify(recipeRepository, times(1)).findById(anyLong());
+        verify(recipeRepository, times(1)).save(any());
+    }
+
+    @Test
     public void testSaveRecipeCommand() throws Exception {
         // given
         IngredientCommand command = new IngredientCommand();
@@ -98,6 +123,5 @@ public class IngredientServiceImplTest {
         assertEquals(Long.valueOf(3L), savedCommand.getId());
         verify(recipeRepository, times(1)).findById(anyLong());
         verify(recipeRepository, times(1)).save(any(Recipe.class));
-
     }
 }
