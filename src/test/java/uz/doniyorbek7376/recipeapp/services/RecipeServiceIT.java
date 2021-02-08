@@ -3,7 +3,10 @@ package uz.doniyorbek7376.recipeapp.services;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
 
 import uz.doniyorbek7376.recipeapp.commands.RecipeCommand;
@@ -12,6 +15,8 @@ import uz.doniyorbek7376.recipeapp.converters.RecipeToRecipeCommand;
 import uz.doniyorbek7376.recipeapp.domain.Recipe;
 import uz.doniyorbek7376.recipeapp.repositories.RecipeRepository;
 
+@ExtendWith(SpringExtension.class)
+@SpringBootTest
 public class RecipeServiceIT {
 
     public static final String NEW_DESCRIPTION = "New Description";
