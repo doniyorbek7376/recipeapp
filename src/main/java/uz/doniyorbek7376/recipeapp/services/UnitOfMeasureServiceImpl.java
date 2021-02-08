@@ -3,10 +3,13 @@ package uz.doniyorbek7376.recipeapp.services;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.springframework.stereotype.Service;
+
 import uz.doniyorbek7376.recipeapp.commands.UnitOfMeasureCommand;
 import uz.doniyorbek7376.recipeapp.converters.UnitOfMeasureToUnitOfMeasureCommand;
 import uz.doniyorbek7376.recipeapp.repositories.UnitOfMeasureRepository;
 
+@Service
 public class UnitOfMeasureServiceImpl implements UnitOfMeasureService {
 
     private final UnitOfMeasureRepository uomRepository;
