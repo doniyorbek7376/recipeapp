@@ -78,4 +78,12 @@ public class RecipeServiceImplTest {
         when(recipeRepository.findById(anyLong())).thenReturn(Optional.of(recipe));
         assertEquals(recipe.getId(), recipeService.findCommandById(1L).getId());
     }
+
+    @Test
+    public void deleteRecipeByIdTest() throws Exception {
+        Long idToDelete = 2L;
+        recipeService.deleteRecipeById(idToDelete);
+
+        verify(recipeRepository, times(1)).deleteById(anyLong());
+    }
 }
